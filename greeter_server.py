@@ -31,11 +31,13 @@ class Game(wordgame_pb2_grpc.GameServicer):
             for i in phrase:
                 if request.letter == i:
                     print(request.letter, end=" ")
-                    return wordgame_pb2.ResultReply(result='%s is correct' % request.letter)
+                    return wordgame_pb2.ResultReply(result='correct')
+                    # return wordgame_pb2.ResultReply(result='%s is correct' % request.letter)
                 else:
                     print("_", end=" ")
                     success = False
-                    return wordgame_pb2.ResultReply(result='%s is incorrect' % request.letter)
+                    return wordgame_pb2.ResultReply(result='incorrect')
+                    # return wordgame_pb2.ResultReply(result='%s is incorrect' % request.letter)
 
             if success:
                 print("Success!")
