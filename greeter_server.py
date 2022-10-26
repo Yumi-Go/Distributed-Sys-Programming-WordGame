@@ -22,25 +22,25 @@ class Game(wordgame_pb2_grpc.GameServicer):
         print("answer : " + phrase)  # print answer just for check
         # words = phrase.split()
 
-        letter = input("Enter a letter >> ")
+        #letter = input("Enter a letter >> ")
 
         while True:
             success = True
             print()
 
             for i in phrase:
-                if letter == i:
-                    print(letter, end=" ")
-                    return wordgame_pb2.ResultReply(result='Correct!')
+                if request.letter == i:
+                    print(request.letter, end=" ")
+                    return wordgame_pb2.ResultReply(result='%s is correct' % request.letter)
                 else:
                     print("_", end=" ")
                     success = False
-                    return wordgame_pb2.ResultReply(result='Wrong!')
-            print()
 
             if success:
                 print("Success!")
                 break
+
+            return wordgame_pb2.ResultReply(result='%s is incorrect' % request.letter)
 
 
         # return wordgame_pb2.HelloReply(message='Hello, %s!' % request.name)
