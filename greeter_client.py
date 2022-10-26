@@ -11,12 +11,23 @@ def run():
     print("Welcome to the Wheel of Fortune!")
     with grpc.insecure_channel('localhost:50051') as channel:
       stub = wordgame_pb2_grpc.GameStub(channel)
-      guess = input("Enter letter: ")
-      response = stub.GuessingLetter(wordgame_pb2.LetterRequest(letter=guess))
-      if response.result == 'correct':
-          print(guess, end=" ")
-      else:
-          print("_", end=" ")
+      choice = None
+      while choice in (None, '', 'Y', 'y'):
+          guess = input("Enter a letter: ")
+          response = stub.GuessingLetter(wordgame_pb2.LetterRequest(letter=guess))
+          if response.result == 'correct':
+              print(guess, end=" ")
+          else:
+              print("_", end=" ")
+          print()
+          print("Result: " + response.result)
+          choice = input("Go again? (Y/N) ")
+      # guess = input("Enter a letter: ")
+      # response = stub.GuessingLetter(wordgame_pb2.LetterRequest(letter=guess))
+      # if response.result == 'correct':
+      #     print(guess, end=" ")
+      # else:
+      #     print("_", end=" ")
 
     print()
     print("Result: " + response.result)
