@@ -37,12 +37,12 @@ class GreeterServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def SayHelloAgain(self, request, context):
-        """Sends another greeting
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+    # def SayHelloAgain(self, request, context):
+    #     """Sends another greeting
+    #     """
+    #     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    #     context.set_details('Method not implemented!')
+    #     raise NotImplementedError('Method not implemented!')
 
 
 def add_GreeterServicer_to_server(servicer, server):
@@ -52,11 +52,11 @@ def add_GreeterServicer_to_server(servicer, server):
                     request_deserializer=protos_dot_wordgame__pb2.HelloRequest.FromString,
                     response_serializer=protos_dot_wordgame__pb2.HelloReply.SerializeToString,
             ),
-            'SayHelloAgain': grpc.unary_unary_rpc_method_handler(
-                    servicer.SayHelloAgain,
-                    request_deserializer=protos_dot_wordgame__pb2.HelloRequest.FromString,
-                    response_serializer=protos_dot_wordgame__pb2.HelloReply.SerializeToString,
-            ),
+            # 'SayHelloAgain': grpc.unary_unary_rpc_method_handler(
+            #         servicer.SayHelloAgain,
+            #         request_deserializer=protos_dot_wordgame__pb2.HelloRequest.FromString,
+            #         response_serializer=protos_dot_wordgame__pb2.HelloReply.SerializeToString,
+            # ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'wordgame.Greeter', rpc_method_handlers)
