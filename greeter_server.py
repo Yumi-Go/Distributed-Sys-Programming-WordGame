@@ -35,12 +35,13 @@ class Game(wordgame_pb2_grpc.GameServicer):
                 else:
                     print("_", end=" ")
                     success = False
+                    return wordgame_pb2.ResultReply(result='%s is incorrect' % request.letter)
 
             if success:
                 print("Success!")
                 break
 
-            return wordgame_pb2.ResultReply(result='%s is incorrect' % request.letter)
+
 
 
         # return wordgame_pb2.HelloReply(message='Hello, %s!' % request.name)
