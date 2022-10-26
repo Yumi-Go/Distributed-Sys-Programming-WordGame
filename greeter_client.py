@@ -15,9 +15,9 @@ def run():
       stub = wordgame_pb2_grpc.GreeterStub(channel)
       response = stub.SayHello(wordgame_pb2.HelloRequest(name='you'))
       print("Greeter client received: " + response.message)
-      response = stub.SayHelloAgain(wordgame_pb2.HelloRequest(name='you'))
-      print("Greeter client received: " + response.message)
-      print("Greeter client received: " + response.message)
+      # response = stub.SayHelloAgain(wordgame_pb2.HelloRequest(name='you'))
+      # print("Greeter client received: " + response.message)
+      # print("Greeter client received: " + response.message)
 
 
 if __name__ == '__main__':
