@@ -8,7 +8,6 @@ import wordgame_pb2_grpc
 
 
 def run():
-
     # response = . (name = "") <-- this is request
     print("Will try to greet world ...")
     with grpc.insecure_channel('localhost:50051') as channel:
