@@ -8,19 +8,19 @@ syntax = "proto3";
 package wordgame;
 
 // The greeting service definition.
-service Greeter {
+service Game {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-  // Sends another greeting
-  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+  rpc GuessingLetter (LetterRequest) returns (ResultReply) {}
+
+
 }
 
 // The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
+message LetterRequest {
+  string letter = 1;
 }
 
 // The response message containing the greetings
-message HelloReply {
-  string message = 1;
+message ResultReply {
+  string result = 1;
 }

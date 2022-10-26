@@ -7,9 +7,9 @@ import wordgame_pb2_grpc
 
 from random import *
 
-class Greeter(wordgame_pb2_grpc.GreeterServicer):
+class Game(wordgame_pb2_grpc.GameServicer):
 
-    def SayHello(self, request, context):
+    def GuessingLetter(self, request, context):
 
         phrases = []
 
@@ -25,23 +25,20 @@ class Greeter(wordgame_pb2_grpc.GreeterServicer):
         letter = input("Enter a letter >> ")
 
         while True:
-            succeed = True
+            success = True
             print()
-
-            # if letter in phrase:
-            #     print("Correct")
-            # else:
-            #     print("Wrong")
 
             for i in phrase:
                 if letter == i:
                     print(letter, end=" ")
+                    return wordgame_pb2.ResultReply(result='Correct!')
                 else:
                     print("_", end=" ")
-                    succeed = False
+                    success = False
+                    return wordgame_pb2.ResultReply(result='Wrong!')
             print()
 
-            if succeed:
+            if success:
                 print("Success!")
                 break
 
@@ -53,7 +50,7 @@ class Greeter(wordgame_pb2_grpc.GreeterServicer):
 def serve():
     port = '50051'
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    wordgame_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+    wordgame_pb2_grpc.add_GameServicer_to_server(Game(), server)
     server.add_insecure_port('[::]:' + port)
     server.start()
     print("Server started, listening on " + port)
