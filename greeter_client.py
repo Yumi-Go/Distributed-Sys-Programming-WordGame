@@ -15,10 +15,10 @@ def run():
       while choice in (None, '', 'Y', 'y'):
           guess = input("Enter a letter: ")
           response = stub.GuessingLetter(wordgame_pb2.LetterRequest(letter=guess))
-          if response.result == 'correct':
-              print(guess, end=" ")
-          else:
-              print("_", end=" ")
+          # if response.result == 'correct':
+          #     print(guess, end=" ")
+          # else:
+          #     print("_", end=" ")
           print()
           print("Result: " + response.result)
           choice = input("Go again? (Y/N) ")
@@ -29,8 +29,8 @@ def run():
       # else:
       #     print("_", end=" ")
 
-    print()
-    print("Result: " + response.result)
+    # print()
+    # print("Result: " + response.result)
 
 
 
