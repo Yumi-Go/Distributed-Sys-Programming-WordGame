@@ -16,10 +16,10 @@ def run():
             file = "phrases.txt"
             chosen_phrase = stub.ChoosePhrase(wordgame_pb2.PhraseRequest(file_name=file))
             chosen_phrase = chosen_phrase.phrase.strip().upper()
-            print("answer : " + chosen_phrase)  # print answer just for check
+            print("answer : " + chosen_phrase)  # print answer for check
             init_phrase = stub.InitializePhrase(wordgame_pb2.InitRequest(init_request_phrase=chosen_phrase))
             init_phrase = init_phrase.init_result_phrase.strip().upper()
-            print("init_phrase Result before loop: " + init_phrase)  # for check
+            # print("init_phrase Result before loop: " + init_phrase)  # for check
 
             list_to_delete = [" ", ",", "\'", "!", "-", "."]
             list_for_count = [] # to remove duplicated letter

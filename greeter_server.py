@@ -9,6 +9,12 @@ from random import *
 
 class Game(wordgame_pb2_grpc.GameServicer):
 
+    def __new__(cls):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(Game, cls).__new__(cls)
+        return cls.instance
+
+
     def ChoosePhrase(self, request, context):
 
         file = open(request.file_name, "r")
