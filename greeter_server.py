@@ -15,12 +15,11 @@ class Game(wordgame_pb2_grpc.GameServicer):
         phrases = file.readlines()
         file.close()
 
-        # for check
-        for x in range(len(phrases)):
-            print(phrases[x])
+        # # for check
+        # for x in range(len(phrases)):
+        #     print(phrases[x])
 
         chosen_phrase = choice(phrases)
-        # print("answer : " + chosen_phrase)  # print answer just for check
         return wordgame_pb2.PhraseResultReply(phrase=chosen_phrase)
 
 
@@ -49,7 +48,7 @@ class Game(wordgame_pb2_grpc.GameServicer):
         # for check
         for y in range(len(letters_list)):
             init_letters = init_letters + letters_list[y]
-        print("this is init_letters: " + init_letters) # for check
+        # print("Initialized letters: " + init_letters) # for check
 
         return wordgame_pb2.InitResultReply(init_result_phrase=init_letters)
 
@@ -57,20 +56,19 @@ class Game(wordgame_pb2_grpc.GameServicer):
         chosen_phrase = request.chosen_phrase
         changed_phrase = request.initialized_phrase
         letter = request.letter
-        print("chosen_phrase: " + chosen_phrase) # for check
-        print("changed_phrase: " + changed_phrase) # for check
-        print("letter: " + letter) # for check
+        # print("chosen_phrase: " + chosen_phrase) # for check
+        # print("changed_phrase: " + changed_phrase) # for check
+        # print("letter: " + letter) # for check
 
         letters_list = list(changed_phrase)
 
         for i in range(len(chosen_phrase)):
-            print(f'chosen_phrase[{i}]: ' + chosen_phrase[i])  # for check
+            # print(f'chosen_phrase[{i}]: ' + chosen_phrase[i])  # for check
             if letter == chosen_phrase[i]:
                 letters_list[i] = letter
 
         result_phrase = ''.join(letters_list)
-
-        print("changed_phrase after change: " + result_phrase) # for check
+        # print("changed_phrase after change: " + result_phrase) # for check
 
         return wordgame_pb2.LetterResultReply(result=result_phrase)
 
@@ -78,24 +76,21 @@ class Game(wordgame_pb2_grpc.GameServicer):
     def GameResult(self, request, context):
         counter = request.counter
         phrase_len = request.phrase_len
-        result = ""
 
         if counter == phrase_len:
             result = "Great! You succeeded in only one try every letter!"
-            print(result) # for check
-        elif counter >= (2 * phrase_len):
-            result = "Well Done!"
-            print(result) # for check
-        elif counter >= (3 * phrase_len):
-            result = "So-So"
-            print(result) # for check
+            # print(result) # for check
+        elif counter <= (1.2 * phrase_len):
+            result = f'Well Done!\n\t\tSuccess after {counter} attempts'
+            # print(result) # for check
+        elif counter <= (1.5 * phrase_len):
+            result = f'So-So\n\t\tSuccess after {counter} attempts'
+            # print(result) # for check
         else:
-            result = "Not Good~ Practice more!"
-            print(result) # for check
+            result = f'Not Good~ Practice more!\n\t\tSuccess after {counter} attempts'
+            # print(result) # for check
 
-        return wordgame_pb2.LetterResultReply(game_result=result)
-
-
+        return wordgame_pb2.GameResultReply(game_result=result)
 
 
 def serve():

@@ -21,14 +21,14 @@ def run():
             init_phrase = init_phrase.init_result_phrase.strip().upper()
             print("init_phrase Result before loop: " + init_phrase)  # for check
 
-            temp_list = list(chosen_phrase)
+            list_to_delete = [" ", ",", "\'", "!", "-", "."]
             list_for_count = [] # to remove duplicated letter
-            for t in temp_list:
-                if t not in temp_list:
+            for t in chosen_phrase:
+                if (t not in list_to_delete) and (t not in list_for_count):
                     list_for_count.append(t)
-            print(list_for_count) # for check
+            # print(list_for_count) # for check
             phrase_len = len(list_for_count)
-            print("length of phrase: " + phrase_len) # for check
+            # print("length of phrase: " + str(phrase_len)) # for check
 
             counter = 0
             while True:
@@ -38,8 +38,8 @@ def run():
                 init_phrase = changed_phrase.result.strip()
                 print()
 
-                print("Result: " + init_phrase) # for check
-                print("Answer: " + chosen_phrase) # for check
+                print("Result: " + init_phrase)
+                # print("Answer: " + chosen_phrase) # for check
 
                 counter += 1
 
@@ -47,7 +47,8 @@ def run():
                     print()
                     print("*********** Success! ***********")
                     result = stub.GameResult(wordgame_pb2.GameResultRequest(counter=counter, phrase_len=phrase_len))
-                    print("\tYour Result:\n\t\tresult")
+                    result = result.game_result
+                    print(f'\tYour Result:\n\t\t{result}')
                     break
             print()
             choice = input("Go again? (Y/N) ")

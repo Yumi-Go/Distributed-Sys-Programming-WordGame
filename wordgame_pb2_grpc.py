@@ -6,8 +6,7 @@ import wordgame_pb2 as protos_dot_wordgame__pb2
 
 
 class GameStub(object):
-    """The greeting service definition.
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
         """Constructor.
@@ -30,11 +29,15 @@ class GameStub(object):
                 request_serializer=protos_dot_wordgame__pb2.LetterRequest.SerializeToString,
                 response_deserializer=protos_dot_wordgame__pb2.LetterResultReply.FromString,
                 )
+        self.GameResult = channel.unary_unary(
+                '/wordgame.Game/GameResult',
+                request_serializer=protos_dot_wordgame__pb2.GameResultRequest.SerializeToString,
+                response_deserializer=protos_dot_wordgame__pb2.GameResultReply.FromString,
+                )
 
 
 class GameServicer(object):
-    """The greeting service definition.
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def ChoosePhrase(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -49,6 +52,12 @@ class GameServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def ChangeLetter(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GameResult(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -72,6 +81,11 @@ def add_GameServicer_to_server(servicer, server):
                     request_deserializer=protos_dot_wordgame__pb2.LetterRequest.FromString,
                     response_serializer=protos_dot_wordgame__pb2.LetterResultReply.SerializeToString,
             ),
+            'GameResult': grpc.unary_unary_rpc_method_handler(
+                    servicer.GameResult,
+                    request_deserializer=protos_dot_wordgame__pb2.GameResultRequest.FromString,
+                    response_serializer=protos_dot_wordgame__pb2.GameResultReply.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'wordgame.Game', rpc_method_handlers)
@@ -80,8 +94,7 @@ def add_GameServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Game(object):
-    """The greeting service definition.
-    """
+    """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def ChoosePhrase(request,
@@ -131,5 +144,22 @@ class Game(object):
         return grpc.experimental.unary_unary(request, target, '/wordgame.Game/ChangeLetter',
             protos_dot_wordgame__pb2.LetterRequest.SerializeToString,
             protos_dot_wordgame__pb2.LetterResultReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GameResult(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/wordgame.Game/GameResult',
+            protos_dot_wordgame__pb2.GameResultRequest.SerializeToString,
+            protos_dot_wordgame__pb2.GameResultReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
