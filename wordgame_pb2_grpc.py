@@ -15,10 +15,20 @@ class GameStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GuessingLetter = channel.unary_unary(
-                '/wordgame.Game/GuessingLetter',
+        self.ChoosePhrase = channel.unary_unary(
+                '/wordgame.Game/ChoosePhrase',
+                request_serializer=protos_dot_wordgame__pb2.PhraseRequest.SerializeToString,
+                response_deserializer=protos_dot_wordgame__pb2.PhraseResultReply.FromString,
+                )
+        self.InitializePhrase = channel.unary_unary(
+                '/wordgame.Game/InitializePhrase',
+                request_serializer=protos_dot_wordgame__pb2.InitRequest.SerializeToString,
+                response_deserializer=protos_dot_wordgame__pb2.InitResultReply.FromString,
+                )
+        self.ChangeLetter = channel.unary_unary(
+                '/wordgame.Game/ChangeLetter',
                 request_serializer=protos_dot_wordgame__pb2.LetterRequest.SerializeToString,
-                response_deserializer=protos_dot_wordgame__pb2.ResultReply.FromString,
+                response_deserializer=protos_dot_wordgame__pb2.LetterResultReply.FromString,
                 )
 
 
@@ -26,9 +36,20 @@ class GameServicer(object):
     """The greeting service definition.
     """
 
-    def GuessingLetter(self, request, context):
-        """Sends a greeting
-        """
+    def ChoosePhrase(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def InitializePhrase(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ChangeLetter(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -36,10 +57,20 @@ class GameServicer(object):
 
 def add_GameServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GuessingLetter': grpc.unary_unary_rpc_method_handler(
-                    servicer.GuessingLetter,
+            'ChoosePhrase': grpc.unary_unary_rpc_method_handler(
+                    servicer.ChoosePhrase,
+                    request_deserializer=protos_dot_wordgame__pb2.PhraseRequest.FromString,
+                    response_serializer=protos_dot_wordgame__pb2.PhraseResultReply.SerializeToString,
+            ),
+            'InitializePhrase': grpc.unary_unary_rpc_method_handler(
+                    servicer.InitializePhrase,
+                    request_deserializer=protos_dot_wordgame__pb2.InitRequest.FromString,
+                    response_serializer=protos_dot_wordgame__pb2.InitResultReply.SerializeToString,
+            ),
+            'ChangeLetter': grpc.unary_unary_rpc_method_handler(
+                    servicer.ChangeLetter,
                     request_deserializer=protos_dot_wordgame__pb2.LetterRequest.FromString,
-                    response_serializer=protos_dot_wordgame__pb2.ResultReply.SerializeToString,
+                    response_serializer=protos_dot_wordgame__pb2.LetterResultReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -53,7 +84,7 @@ class Game(object):
     """
 
     @staticmethod
-    def GuessingLetter(request,
+    def ChoosePhrase(request,
             target,
             options=(),
             channel_credentials=None,
@@ -63,8 +94,42 @@ class Game(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/wordgame.Game/GuessingLetter',
+        return grpc.experimental.unary_unary(request, target, '/wordgame.Game/ChoosePhrase',
+            protos_dot_wordgame__pb2.PhraseRequest.SerializeToString,
+            protos_dot_wordgame__pb2.PhraseResultReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def InitializePhrase(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/wordgame.Game/InitializePhrase',
+            protos_dot_wordgame__pb2.InitRequest.SerializeToString,
+            protos_dot_wordgame__pb2.InitResultReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ChangeLetter(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/wordgame.Game/ChangeLetter',
             protos_dot_wordgame__pb2.LetterRequest.SerializeToString,
-            protos_dot_wordgame__pb2.ResultReply.FromString,
+            protos_dot_wordgame__pb2.LetterResultReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

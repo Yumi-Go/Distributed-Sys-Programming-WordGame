@@ -9,44 +9,125 @@ from random import *
 
 class Game(wordgame_pb2_grpc.GameServicer):
 
-    def GuessingLetter(self, request, context):
+    def ChoosePhrase(self, request, context):
 
-        phrases = []
-
-        file = open("phrases.txt", "r")
-        line = file.readline()
-        phrases.append(line)
+        file = open(request.file_name, "r")
+        phrases = file.readlines()
         file.close()
 
-        phrase = choice(phrases)
-        print("answer : " + phrase)  # print answer just for check
-        # words = phrase.split()
+        # for check
+        for x in range(len(phrases)):
+            print(phrases[x])
 
-        #letter = input("Enter a letter >> ")
-        letters = ""
+        chosen_phrase = choice(phrases)
+        # print("answer : " + chosen_phrase)  # print answer just for check
+        return wordgame_pb2.PhraseResultReply(phrase=chosen_phrase)
 
-        while True:
-            success = True
-            print()
-            for i in phrase:
-                print(i)
-                if request.letter == i:
 
-                    letters = letters + request.letter
-                    # print(request.letter)
-                    # return wordgame_pb2.ResultReply(result='%s is correct' % request.letter)
-                else:
-                    letters = letters + "_"
-                    success = False
-                    # return wordgame_pb2.ResultReply(result='%s is incorrect' % request.letter)
+    def InitializePhrase(self, request, context):
 
-            if success:
-                print("Success!")
-                break
+        letters_list = []
+        init_letters = ""
+        phrase = request.init_request_phrase
 
-            return wordgame_pb2.ResultReply(result=letters)
+        for k in range(len(phrase)):
+            if phrase[k] == " ":
+                letters_list.append(" ")
+            elif phrase[k] == ",":
+                letters_list.append(",")
+            elif phrase[k] == "\'":
+                letters_list.append("\'")
+            else:
+                letters_list.append("_")
 
-        # return wordgame_pb2.HelloReply(message='Hello, %s!' % request.name)
+        # for check
+        for y in range(len(letters_list)):
+            init_letters = init_letters + letters_list[y]
+        print(init_letters + "this is init_letters") # for check
+
+        return wordgame_pb2.InitResultReply(init_result_phrase=init_letters)
+
+    def ChangeLetter(self, request, context):
+        chosen_phrase = request.chosen_phrase
+        changed_phrase = request.initialized_phrase
+        letter = request.letter
+        print("chosen_phrase: " + chosen_phrase) # for check
+        print("changed_phrase: " + changed_phrase) # for check
+        print("letter: " + letter) # for check
+
+        letters_list = list(changed_phrase)
+        # letters_list = []
+        # for g in range(len(changed_phrase)):
+        #     letters_list.append(changed_phrase[g])
+
+        for i in range(len(chosen_phrase)):
+            print("chosen_phrase[i]: " + chosen_phrase[i])  # for check
+            if letter == chosen_phrase[i]:
+                letters_list[i] = letter
+
+        result_phrase = ''.join(letters_list)
+
+        print("changed_phrase after change: " + result_phrase)
+        # for d in range(len(letters_list)):
+        #     result_letters = result_letters + letters_list[d]
+        # print(result_letters + "this is result_letters")
+        #
+        # if result_letters == phrase:
+        #     print("Success!")
+        #     success = True
+        #     break
+
+        return wordgame_pb2.LetterResultReply(result=result_phrase)
+
+
+
+
+    # def GuessingLetter(self, request, context):
+    #
+    #     success = False
+    #
+    #     while not success:
+    #         print()
+    #         for i in range(len(phrase)):
+    #             print(phrase[i])  # for check
+    #             if request.letter == phrase[i]:
+    #                 letters_list[i] = request.letter
+    #
+    #         for d in range(len(letters_list)):
+    #             result_letters = result_letters + letters_list[d]
+    #         print(result_letters + "this is result_letters")
+    #
+    #         if result_letters == phrase:
+    #             print("Success!")
+    #             success = True
+    #             break
+    #
+    #
+    #     # while True:
+    #     #     success = True
+    #     #     print()
+    #
+    #         # for i in range(len(phrase)):
+    #         #     print(phrase[i])  # for check
+    #         #     if request.letter == phrase[i]:
+    #         #         letters_list.append(request.letter)
+    #         #
+    #         #     else:
+    #         #         letters_list.append("_")
+    #         #         success = False
+    #
+    #         # for j in range(len(letters_list)):
+    #         #     letters = letters + letters_list[j]
+    #         #
+    #         # print(letters) # for check
+    #         #
+    #         # if success:
+    #         #     print("Success!")
+    #         #     break
+    #
+    #     return wordgame_pb2.ResultReply(result=success)
+
+
 
 
 
