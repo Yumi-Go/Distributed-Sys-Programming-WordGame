@@ -22,13 +22,14 @@ def run():
             print("init_phrase Result before loop: " + init_phrase)  # for check
 
             temp_list = list(chosen_phrase)
-            list_for_count = []
-            for l in temp_list:
-                if l not in temp_list:
-                    list_for_count.append(l)
+            list_for_count = [] # to remove duplicated letter
+            for t in temp_list:
+                if t not in temp_list:
+                    list_for_count.append(t)
             print(list_for_count) # for check
+            phrase_len = len(list_for_count)
+            print("length of phrase: " + phrase_len) # for check
 
-            num_character = len(chosen_phrase)
             counter = 0
             while True:
                 guess = input("Enter a letter: ").upper()
@@ -45,24 +46,8 @@ def run():
                 if init_phrase == chosen_phrase:
                     print()
                     print("*********** Success! ***********")
-
-                    if counter == len(list_for_count):
-                        print("Score: 100%")
-                        print("Great! You succeeded in only one try every letter!")
-                    elif counter >= (2 * len(list_for_count)):
-                        score = 100 / counter
-                        print("Score: " + score)
-                        if score >= 70:
-                            print("Score: " + score)
-                            print("Well Done!")
-                        elif score > 50:
-                            print("Score: " + score)
-                            print("Not good")
-                        else:
-                            print("Score: " + score)
-                            print("Too Bad~ Practice more!")
-
-
+                    result = stub.GameResult(wordgame_pb2.GameResultRequest(counter=counter, phrase_len=phrase_len))
+                    print("\tYour Result:\n\t\tresult")
                     break
             print()
             choice = input("Go again? (Y/N) ")

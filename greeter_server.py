@@ -75,6 +75,28 @@ class Game(wordgame_pb2_grpc.GameServicer):
         return wordgame_pb2.LetterResultReply(result=result_phrase)
 
 
+    def GameResult(self, request, context):
+        counter = request.counter
+        phrase_len = request.phrase_len
+        result = ""
+
+        if counter == phrase_len:
+            result = "Great! You succeeded in only one try every letter!"
+            print(result) # for check
+        elif counter >= (2 * phrase_len):
+            result = "Well Done!"
+            print(result) # for check
+        elif counter >= (3 * phrase_len):
+            result = "So-So"
+            print(result) # for check
+        else:
+            result = "Not Good~ Practice more!"
+            print(result) # for check
+
+        return wordgame_pb2.LetterResultReply(game_result=result)
+
+
+
 
 def serve():
     port = '50051'

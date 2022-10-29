@@ -56,4 +56,22 @@ class LetterResultReply(_message.Message, ABC):
     def __init__(self, result: _Optional[str] = ...) -> None: ...
 
 
+class GameResultRequest(_message.Message, ABC):
+    __slots__ = ["counter", "phrase_len"]
+    COUNTER_FIELD_NUMBER: _ClassVar[int]
+    COUNTER: int
+
+    PHRASE_LEN_FIELD_NUMBER: _ClassVar[int]
+    PHRASE_LEN_PHRASE: int
+
+    def __init__(self, counter: _Optional[int] = ..., phrase_len: _Optional[int] = ...) -> None: ...
+
+
+class GameResultReply(_message.Message, ABC):
+    __slots__ = ["game_result"]
+    GAME_RESULT_FIELD_NUMBER: _ClassVar[int]
+    GAME_RESULT: str
+    def __init__(self, game_result: _Optional[str] = ...) -> None: ...
+
+
 
